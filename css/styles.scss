@@ -1,0 +1,21 @@
+body {
+	background-color: grey;
+}
+
+#word {
+	font-size: 5em;
+	font-weight: bold;
+	text-align: center;
+	.inactive {
+		opacity: .5;
+	}
+	.current {
+		color: blue;
+	}
+	.error {
+		color: red;
+	}
+	.correct {
+		color: green;
+	}
+}

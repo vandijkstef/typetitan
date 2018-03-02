@@ -1,0 +1,25 @@
+body {
+  background-color: grey;
+}
+
+#word {
+  font-size: 5em;
+  font-weight: bold;
+  text-align: center;
+}
+
+#word .inactive {
+  opacity: .5;
+}
+
+#word .current {
+  color: blue;
+}
+
+#word .error {
+  color: red;
+}
+
+#word .correct {
+  color: green;
+}

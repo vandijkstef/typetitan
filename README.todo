@@ -1,0 +1,34 @@
+A game where you touch letters for the mega-bonus.
+	Typing game? Doable in the browser/JS
+
+An game where you toss sentient plants to earn tokens.
+
+A game where you collect crystals from underwater cities starting from nothing.
+	Turn based/base building
+
+
+
+Typing game in the browser
+
+☐ Score display
+	☐ Score streak
+	☐ Last word score
+	☐ Current score
+
+☐ Settings panel
+	☐ Setting saving
+	☐ Minimum word length
+
+☐ Main menu/start-up screen
+
+☐ Player profile
+	☐ Saving of player profile
+	☐ Name
+	☐ Avatar?
+	☐ Highscores
+	☐ Possibly created simple REST server for this?
+
+☐ Music
+☐ FX correct
+☐ FX error
+☐ Multiple words?
