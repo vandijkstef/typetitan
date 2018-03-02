@@ -2,7 +2,7 @@ import debug from './debug.js';
 import LoadJSON from './LoadJSON.js';
 import appDataHelper from './appDataHelper.js';
 import Word from './Word.js';
-import UI from './UItools.js';
+import UI from '../UItools/UItools.js';
 
 class HyperTyper {
 	constructor() {
