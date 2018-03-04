@@ -3,6 +3,7 @@ import LoadJSON from './LoadJSON.js';
 import appDataHelper from './appDataHelper.js';
 import Word from './Word.js';
 import UI from '../UItools/UItools.js';
+import settings from './settings.js';
 
 class HyperTyper {
 	constructor() {
@@ -11,20 +12,12 @@ class HyperTyper {
 			appLoad: window.performance.now(),
 			word: window.performance.now(),
 			tick: window.performance.now()
-			// appLoad: window.performance.now(),
-			// appLoad: window.performance.now(),
-			// appLoad: window.performance.now(),
-
 		};
 		this.appData = appDataHelper.fetch();
+		this.gameData = new GameData();
 		this.CreateMainMenu();
 		this.CreateSettings();
 		this.DoKey();
-		this.GetDict('en', () => {
-			console.log(this.GetTime(this.timers.appLoad));
-			this.timers.appLoad = window.performance.now();
-			this.GetTime(this.timers.appLoad);
-		});
 	}
 
 	GetDict(dict, callback) {
@@ -49,6 +42,7 @@ class HyperTyper {
 	}
 
 	SetWord() {
+		this.timers.word = window.performance.now();
 		debug.flow(this.constructor.name, 'SetWord', 'New word');
 		const Word = this.GetWord();
 		const wordArray = [];
@@ -81,6 +75,8 @@ class HyperTyper {
 	SetActiveLetter() {
 		const letter = this.NextLetter();
 		if (!letter) {
+			const wordTime = this.GetTime(this.timers.word);
+			console.log(wordTime);
 			this.SetWord();
 		} else {
 			letter.classList.remove('inactive');
@@ -99,12 +95,14 @@ class HyperTyper {
 	}
 
 	CorrectLetter(letter) {
+		this.gameData.Score();
 		letter.classList.remove('current');
 		letter.classList.add('correct');
 		this.SetActiveLetter();
 	}
 
 	ErrorLetter(letter) {
+		this.gameData.Error();
 		letter.classList.add('error');
 		setTimeout(() => {
 			letter.classList.remove('error');
@@ -113,6 +111,9 @@ class HyperTyper {
 
 	DoKey() {
 		document.addEventListener('keypress', (e) => {
+			const keyTime = this.GetTime(this.timers.tick);
+			this.timers.tick = window.performance.now();
+			console.log('keytime', keyTime);
 			if (this.appData.elements.word !== undefined) {
 				if (this.CurrentLetter().innerText === e.key) {
 					this.CorrectLetter(this.CurrentLetter());
@@ -125,14 +126,18 @@ class HyperTyper {
 
 	CreateMainMenu() {
 		const content = [];
-		content.push(UI.getText('HyperTyper', '', '', 'h1'));
+		const title = UI.getText('HyperTyper', '', '', 'h1');
+		const dictSelect = UI.getSelect('dict', settings.dictionaries);
 		const startGame = UI.getLink('Start game', '/', 'button', 'start');
+
 		UI.addHandler(startGame, (e) => {
-			console.log(e);
 			e.preventDefault();
 			this.appData.elements.mainMenu.style.display = 'none';
-			this.SetWord();
+			this.StartGame();
 		});
+
+		content.push(title);
+		content.push(dictSelect);
 		content.push(startGame);
 
 		this.appData.elements.mainMenu = UI.renderIn(content, document.body, 'menu', 'main', 'section').querySelector('#main');
@@ -142,10 +147,77 @@ class HyperTyper {
 
 	}
 
+	CreateScorePanel() {
+		const content = [];
+
+		const pointsText = UI.getText('Score:');
+		const pointsNumber = UI.getText(0);
+		const points = UI.wrap([pointsText, pointsNumber]);
+		content.push(points);
+
+		const comboText = UI.getText('Combo:');
+		const comboNumber = UI.getText(0);
+		const combo = UI.wrap([comboText, comboNumber]);
+		content.push(combo);
+		
+		this.appData.elements.scorePanel = UI.renderIn(content, document.body, 'panel', 'score', 'section').querySelector('#score');
+	}
+
 	GetTime(timer) {
 		return window.performance.now() - timer;
 	}
 
+	StartGame() {
+		const dict = document.querySelector('[name=dict]').value;
+		this.GetDict(dict, () => {
+			console.log(this.GetTime(this.timers.appLoad));
+			this.CreateScorePanel();
+			this.SetWord();
+		});
+	}
+
+}
+
+class GameData {
+	constructor(scorePerTick = 10, comboPerTick = .1) {
+		this.score = 0;
+		this.combo = 0;
+		this.letterCount = 0;
+		this.scorePerTick = scorePerTick;
+		this.comboPerTick = comboPerTick;
+	}
+
+	Score() {
+		this.combo += this.comboPerTick;
+		this.score += this.scorePerTick * this.combo;
+		this.letterCount++;
+		this.Update();
+	}
+
+	ScoreWord() {
+		console.log('TODO');
+		this.letterCount = 0;
+		this.Update();
+	}
+
+	Error() {
+		this.combo = 0;
+		this.Update();
+	}
+
+	Update() {
+		if (!this.scorePanel) {
+			this.scorePanel = {
+				panel: document.querySelector('#score'),
+				score: document.querySelector('#score div:first-child p:last-child'),
+				combo: document.querySelector('#score div:last-child p:last-child')
+			};
+		}
+		this.scorePanel.score.innerText = this.score;
+		this.scorePanel.combo.innerText = this.combo;
+		console.log(this.scorePanel.score);
+
+	}
 }
 
 document.addEventListener('DOMContentLoaded', function() {
