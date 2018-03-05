@@ -5,8 +5,7 @@ export default class AppData {
 			used: [],
 			remaining: []
 		};
-		this.elements = {
-			word: null
-		};
+		this.elements = {};
+		this.gamesPlayed = [];
 	}
 }

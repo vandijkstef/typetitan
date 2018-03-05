@@ -54,21 +54,50 @@ body {
 #main {
 	display: flex;
 	flex-direction: column;
+	font-size: 2em;
 	h1 {
-		font-size: 4em;
+		// font-size: 4em;
 	}
 	select {
-		font-size: 1.6em;
+		font-size: .8em;
 		padding: .4em;
+		width: 100%;
 	}
 	.button {
-		font-size: 1.6em;
+		// font-size: 1.6em;
 	}
+	label {
+		// margin: 0;
+	}
+		
 }
 
 #score {
 	position: absolute;
     bottom: 0;
     width: 100%;
-    background-color: var(--tone);
+	background-color: var(--tone);
+	display: flex;
+	justify-content: space-around;
+	font-size: 1.4em;
+	color: white;
+	div {
+		display: flex;
+		p {
+			margin-right: .3em;
+		}
+	}
+}
+
+#gameover {
+	font-size: 1.6em;
+	position: absolute;
+    background-color: rgba(0,0,0,0.6);
+    width: 100vw;
+    height: 100vh;
+	display: flex;
+	flex-direction: column;
+    justify-content: center;
+	align-items: center;
+	color: white;
 }

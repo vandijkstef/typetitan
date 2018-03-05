@@ -11,7 +11,18 @@ const settings = {
 			label: 'Test small',
 			file: 'en'
 		}
-	]
+	],
+	rushSize: 10,
+	gameModes: [
+		{
+			label: 'All the words! Finish the complete dictionary',
+			file: 'all'
+		},
+		{
+			label: `Rush! Do 50 words as quick as possible`,
+			file: 'rush'
+		}
+	],
 };
 
 export default settings;

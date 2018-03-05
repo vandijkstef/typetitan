@@ -14,15 +14,17 @@ class HyperTyper {
 			tick: window.performance.now()
 		};
 		this.appData = appDataHelper.fetch();
+		console.log(this.appData);
 		this.gameData = new GameData();
 		this.CreateMainMenu();
 		this.CreateSettings();
 		this.DoKey();
 	}
 
-	GetDict(dict, callback) {
+	GetDict(dict, mode, callback) {
 		new LoadJSON().Dict(dict, (data) => {
 			debug.flow(this.constructor.name, 'Constructor', 'Got Dict');
+
 			data.forEach((word) => {
 				const newWord = new Word(word);
 				this.appData.dicts.full.push(newWord);
@@ -64,8 +66,9 @@ class HyperTyper {
 		const newWord = this.appData.dicts.remaining.splice(index, 1);
 		this.appData.dicts.used.push(Object.assign({}, newWord));
 		if (newWord.length === 0) {
-			console.warn('empty dict');
-			return new Word(['empty dictionary']);
+			this.EndGame('dict_empty');
+			// console.warn('empty dict');
+			// return new Word(['empty dictionary']);
 		} else {
 			console.log(newWord, this.appData.dicts);
 			return newWord[0];
@@ -75,9 +78,14 @@ class HyperTyper {
 	SetActiveLetter() {
 		const letter = this.NextLetter();
 		if (!letter) {
-			const wordTime = this.GetTime(this.timers.word);
-			console.log(wordTime);
-			this.SetWord();
+			this.gameData.ScoreWord();
+			if (this.gameMode === 'rush' && this.gameData.wordCount === settings.rushSize) {
+				this.EndGame('rush_complete');
+			} else {
+				const wordTime = this.GetTime(this.timers.word);
+				console.log(wordTime);
+				this.SetWord();
+			}
 		} else {
 			letter.classList.remove('inactive');
 			letter.classList.add('current');
@@ -127,7 +135,9 @@ class HyperTyper {
 	CreateMainMenu() {
 		const content = [];
 		const title = UI.getText('HyperTyper', '', '', 'h1');
-		const dictSelect = UI.getSelect('dict', settings.dictionaries);
+		// const dictSelect = UI.getSelect('dict', settings.dictionaries);
+		const dictSelect = UI.getInput(UI.getLabel('Dictionary'), 'select', 'dict', settings.dictionaries);
+		const gameMode = UI.getInput(UI.getLabel('Gamemode'), 'select', 'gamemode', settings.gameModes);
 		const startGame = UI.getLink('Start game', '/', 'button', 'start');
 
 		UI.addHandler(startGame, (e) => {
@@ -138,6 +148,7 @@ class HyperTyper {
 
 		content.push(title);
 		content.push(dictSelect);
+		content.push(gameMode);
 		content.push(startGame);
 
 		this.appData.elements.mainMenu = UI.renderIn(content, document.body, 'menu', 'main', 'section').querySelector('#main');
@@ -159,6 +170,11 @@ class HyperTyper {
 		const comboNumber = UI.getText(0);
 		const combo = UI.wrap([comboText, comboNumber]);
 		content.push(combo);
+
+		const wordText = UI.getText('Words:');
+		const wordNumber = UI.getText(0);
+		const word = UI.wrap([wordText, wordNumber]);
+		content.push(word);
 		
 		this.appData.elements.scorePanel = UI.renderIn(content, document.body, 'panel', 'score', 'section').querySelector('#score');
 	}
@@ -169,33 +185,60 @@ class HyperTyper {
 
 	StartGame() {
 		const dict = document.querySelector('[name=dict]').value;
-		this.GetDict(dict, () => {
+		this.gameMode = document.querySelector('[name=gamemode]').value;
+		this.GetDict(dict, this.gameMode, () => {
 			console.log(this.GetTime(this.timers.appLoad));
 			this.CreateScorePanel();
 			this.SetWord();
 		});
 	}
 
+	EndGame(type) {
+		console.log('Game over', type);
+		console.log(this.gameData);
+		this.appData.gamesPlayed.push(this.gameData);
+		appDataHelper.store(this.appData);
+		this.appData.elements.word.style.display = 'none';
+		const content = [];
+		
+		const endText = UI.getText('Game over');
+		const restartGame = UI.getLink('Restart', '/', 'button', 'restart');
+
+		UI.addHandler(restartGame, (e) => {
+			e.preventDefault();
+			location.reload();
+		});
+
+		content.push(endText);
+		content.push(restartGame);
+
+		this.appData.elements.gameOverPanel = UI.renderIn(content, document.body, 'panel', 'gameover', 'section').querySelector('#gameover');
+	}
+
 }
 
 class GameData {
-	constructor(scorePerTick = 10, comboPerTick = .1) {
+	constructor(scorePerTick = 10, comboPerTick = 0.1) {
 		this.score = 0;
 		this.combo = 0;
 		this.letterCount = 0;
+		this.totalLetterCount = 0;
+		this.wordCount = 0;
 		this.scorePerTick = scorePerTick;
 		this.comboPerTick = comboPerTick;
 	}
 
 	Score() {
 		this.combo += this.comboPerTick;
+		this.combo = Math.round(this.combo * 10) / 10;
 		this.score += this.scorePerTick * this.combo;
 		this.letterCount++;
 		this.Update();
 	}
 
 	ScoreWord() {
-		console.log('TODO');
+		this.wordCount++;
+		this.totalLetterCount += this.letterCount;
 		this.letterCount = 0;
 		this.Update();
 	}
@@ -210,11 +253,13 @@ class GameData {
 			this.scorePanel = {
 				panel: document.querySelector('#score'),
 				score: document.querySelector('#score div:first-child p:last-child'),
-				combo: document.querySelector('#score div:last-child p:last-child')
+				combo: document.querySelector('#score div:nth-of-type(2) p:last-child'),
+				word: document.querySelector('#score div:last-child p:last-child')
 			};
 		}
 		this.scorePanel.score.innerText = this.score;
 		this.scorePanel.combo.innerText = this.combo;
+		this.scorePanel.word.innerText = this.wordCount;
 		console.log(this.scorePanel.score);
 
 	}
