@@ -4,6 +4,7 @@ import appDataHelper from './appDataHelper.js';
 import Word from './Word.js';
 import UI from '../UItools/UItools.js';
 import settings from './settings.js';
+import themes from './themes.js';
 
 class TypeTitan {
 	constructor() {
@@ -19,6 +20,7 @@ class TypeTitan {
 		this.CreateMainMenu();
 		this.CreateSettings();
 		this.DoKey();
+		this.SetTheme();
 	}
 
 	GetDict(dict, mode, callback) {
@@ -79,7 +81,8 @@ class TypeTitan {
 		const letter = this.NextLetter();
 		if (!letter) {
 			this.gameData.ScoreWord();
-			if (this.gameMode === 'rush' && this.gameData.wordCount === settings.rushSize) {
+			console.log(this.gameData.wordCount, this.gameModeValue);
+			if (this.gameMode === 'rush' && this.gameData.wordCount === parseInt(this.gameModeValue)) {
 				this.EndGame('rush_complete');
 			} else {
 				const wordTime = this.GetTime(this.timers.word);
@@ -138,6 +141,15 @@ class TypeTitan {
 		// const dictSelect = UI.getSelect('dict', settings.dictionaries);
 		const dictSelect = UI.getInput(UI.getLabel('Dictionary'), 'select', 'dict', settings.dictionaries);
 		const gameMode = UI.getInput(UI.getLabel('Gamemode'), 'select', 'gamemode', settings.gameModes);
+		const gameModeValue = UI.getInput(UI.getLabel('Size'), 'number', 'gamemodevalue', 50);
+		gameModeValue.classList.add('hidden');
+		UI.addHandler(gameMode, (e) => {
+			if (e.target.value === 'rush') {
+				gameModeValue.classList.remove('hidden');
+			} else {
+				gameModeValue.classList.add('hidden');
+			}
+		}, 'change');
 		const startGame = UI.getLink('Start game', '/', 'button', 'start');
 
 		UI.addHandler(startGame, (e) => {
@@ -149,6 +161,7 @@ class TypeTitan {
 		content.push(title);
 		content.push(dictSelect);
 		content.push(gameMode);
+		content.push(gameModeValue);
 		content.push(startGame);
 
 		this.appData.elements.mainMenu = UI.renderIn(content, document.body, 'menu', 'main', 'section').querySelector('#main');
@@ -186,6 +199,7 @@ class TypeTitan {
 	StartGame() {
 		const dict = document.querySelector('[name=dict]').value;
 		this.gameMode = document.querySelector('[name=gamemode]').value;
+		this.gameModeValue = document.querySelector('[name=gamemodevalue]').value;
 		this.GetDict(dict, this.gameMode, () => {
 			console.log(this.GetTime(this.timers.appLoad));
 			this.CreateScorePanel();
@@ -213,6 +227,16 @@ class TypeTitan {
 		content.push(restartGame);
 
 		this.appData.elements.gameOverPanel = UI.renderIn(content, document.body, 'panel', 'gameover', 'section').querySelector('#gameover');
+	}
+
+	SetTheme() {
+		const root = document.querySelector(':root');
+		const theme = themes[0];
+		console.log(theme);
+		Object.keys(theme.colors).forEach((key) => {
+			console.log(key);
+			root.style.setProperty(`--${key}`, theme.colors[key]);
+		});
 	}
 
 }

@@ -12,14 +12,13 @@ const settings = {
 			file: 'en'
 		}
 	],
-	rushSize: 10,
 	gameModes: [
 		{
 			label: 'All the words! Finish the complete dictionary',
 			file: 'all'
 		},
 		{
-			label: `Rush! Do 50 words as quick as possible`,
+			label: `Rush! Do XX words as quick as possible`,
 			file: 'rush'
 		}
 	],

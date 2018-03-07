@@ -2,7 +2,7 @@ import API from './API.js';
 
 class LoadJSON extends API {
 	constructor() {
-		super('/');
+		super('/client/');
 	}
 
 	Dict(fileName, callback) {

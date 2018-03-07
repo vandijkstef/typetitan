@@ -31,6 +31,10 @@ body {
   text-decoration: underline;
 }
 
+.hidden {
+  display: none;
+}
+
 #word {
   font-size: 5em;
   font-weight: bold;
@@ -60,7 +64,7 @@ body {
   font-size: 2em;
 }
 
-#main select {
+#main select, #main input {
   font-size: .8em;
   padding: .4em;
   width: 100%;
