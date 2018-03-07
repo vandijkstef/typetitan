@@ -5,7 +5,7 @@ import Word from './Word.js';
 import UI from '../UItools/UItools.js';
 import settings from './settings.js';
 
-class HyperTyper {
+class TypeTitan {
 	constructor() {
 		debug.flow(this.constructor.name, 'Constructor', 'init');
 		this.timers = {
@@ -134,7 +134,7 @@ class HyperTyper {
 
 	CreateMainMenu() {
 		const content = [];
-		const title = UI.getText('HyperTyper', '', '', 'h1');
+		const title = UI.getText('TypeTitan', '', '', 'h1');
 		// const dictSelect = UI.getSelect('dict', settings.dictionaries);
 		const dictSelect = UI.getInput(UI.getLabel('Dictionary'), 'select', 'dict', settings.dictionaries);
 		const gameMode = UI.getInput(UI.getLabel('Gamemode'), 'select', 'gamemode', settings.gameModes);
@@ -266,5 +266,5 @@ class GameData {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-	new HyperTyper();
+	new TypeTitan();
 });
