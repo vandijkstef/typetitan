@@ -1,10 +1,11 @@
 const settings = require('./settings.js');
 const fs = require('fs');
-// const path = require('path');
+const uniqid = require('uniqid');
+const store = require('json-fs-store')('../server/cache');
+
 const TypeTitan = {
 	Get: {
 		Dict: (file, callback) => {
-			//`../public/dicts/${file}.json`
 			var data = fs.readFileSync(`./public/dicts/${file}.json`, 'utf8');
 			callback(data);
 		},
@@ -16,14 +17,21 @@ const TypeTitan = {
 		}
 	},
 	Create: {
-		Game: (mode, modifier) => {
-			// console.log(mode, modifier);
+		Game: (dict, mode, modifier, callback) => {
 			const game = {
+				id: 'g-' + uniqid(),
 				mode: mode,
-				modifief: modifier,
-				dict: []
+				modifier: modifier,
+				dict: [],
+				results: []
 			};
-			return game;
+			store.add(game, (err) => {
+				if (err) {
+					throw err;
+				} else {
+					callback(game.id);
+				}
+			});
 		}
 	}
 };

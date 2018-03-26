@@ -17,7 +17,10 @@ router.post('/', (req, res) => {
 	// GetDict(req.body.dict)
 	// GameMode(req.body.mode)
 	// Modifief(req.body.modifier)
-	res.send('done');
+	TypeTitan.Create.Game(req.body.dict, req.body.mode, req.body.modifier, (gameID) => {
+		console.log(gameID);
+		res.send('done');
+	});
 });
 
 router.get('/game', (req, res) => {
