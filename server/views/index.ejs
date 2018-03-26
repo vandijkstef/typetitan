@@ -1,1 +1,32 @@
-<%= data %>
+<%- include head.ejs %>
+	<section id="main" class="menu">
+		<h1>TypeTitan</h1>
+		<form method="post" action="/">
+			<% if (locals.dicts) { %>
+				<fieldset>
+					<label for="dict">Dictionary</label>
+					<select name="dict" id="dict">
+						<% for (let i = 0; i < locals.dicts.length; i++) { %>
+							<option value="<%- locals.dicts[i].file %>"><%- locals.dicts[i].label %></option>
+						<% } %>
+					</select>
+				</fieldset>
+			<% } %>
+			<% if (locals.gameModes) { %>
+				<fieldset>
+					<label for="mode">Gamemode</label>
+					<select name="mode" id="mode">
+						<% for (let i = 0; i < locals.gameModes.length; i++) { %>
+							<option value="<%- locals.gameModes[i].mode %>"><%- locals.gameModes[i].label %></option>
+						<% } %>
+					</select>
+				</fieldset>
+			<% } %>
+			<fieldset>
+				<label for="modifier">Modifier</label>
+				<input type="number" name ="modifier">
+			</fieldset>
+			<input type="submit" value="start">
+		</form>
+	</section>
+<%- include foot.ejs %>
