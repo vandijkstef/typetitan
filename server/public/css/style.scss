@@ -113,3 +113,9 @@ fieldset {
 	align-items: center;
 	color: white;
 }
+
+.js {
+	form[action='/game'] {
+		// display: none;
+	}
+}
