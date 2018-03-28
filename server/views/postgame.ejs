@@ -1,0 +1,9 @@
+<%- include head.ejs %>
+
+	<h2>postgame</h2>
+	<% if (locals.stats) { %>
+		<p>Right: <%- locals.stats.right %></p>
+		<p>Wrong: <%- locals.stats.wrong %></p>
+	<% } %>
+	
+<%- include foot.ejs %>
