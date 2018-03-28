@@ -3,7 +3,8 @@
 
 	var gameDivs, form;
 	var currentWord = 0;
-
+	var ws;
+	
 	if ('addEventListener' in document) {
 		document.addEventListener('DOMContentLoaded', function() {
 			if ('classList' in document.body && 'querySelector' in document.body) {
@@ -11,6 +12,18 @@
 				SetGame();
 			}
 		});
+		if ('WebSocket' in window) {
+			console.log('websocket');
+			ws = new WebSocket('ws://localhost:13375');
+			ws.onopen = function() {
+				console.log('WS Connected');
+				ws.send('Hi Mr. Server');
+			};
+
+			ws.onmessage = function(e) {
+				console.log(e);
+			};
+		}
 	}
 
 	var SetGame = function() {

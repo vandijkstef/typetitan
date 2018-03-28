@@ -4,6 +4,7 @@ const express = require('express');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const compression = require('compression');
+const ws = require('ws').Server;
 // var favicon = require('serve-favicon');
 // var logger = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -11,6 +12,18 @@ const bodyParser = require('body-parser');
 
 const index = require('./routes/index');
 
+// Setup websocket
+const wss = new ws({port: 13375});
+wss.on('connection', (ws) => {
+	ws.on('message', (message) => {
+		console.log('received', message);
+	});
+	setInterval(()=>{
+		ws.send('heartbeat');
+	}, 1000);
+});
+
+// Setup App
 const app = express();
 
 // Enable GZIP
