@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const compression = require('compression');
 const index = require('./routes/index');
 // var users = require('./routes/users');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
 
 const app = express();
 
@@ -17,6 +19,13 @@ app.use(compression());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Add session support
+app.use(session({
+	secret: 'hAF38J5ja',
+	store: new FileStore(),
+	saveUninitialized: true,
+	resave: false
+}));
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // app.use(logger('dev'));
