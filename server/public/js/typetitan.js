@@ -10,21 +10,21 @@
 			if ('classList' in document.body && 'querySelector' in document.body) {
 				document.body.classList.add('js');
 				SetGame();
+				if ('WebSocket' in window) {
+					console.log('websocket');
+					ws = new WebSocket('ws://localhost:13375');
+					ws.onopen = function() {
+						console.log('WS Connected');
+						ws.send('Hi Mr. Server');
+						ws.send('wantScores'); // TODO: Send this on postgame, along with the gameID and show other players score lists
+					};
+		
+					ws.onmessage = function(e) {
+						console.log(e.data);
+					};
+				}
 			}
 		});
-		if ('WebSocket' in window) {
-			console.log('websocket');
-			ws = new WebSocket('ws://localhost:13375');
-			ws.onopen = function() {
-				console.log('WS Connected');
-				ws.send('Hi Mr. Server');
-				ws.send('wantScores'); // TODO: Send this on postgame, along with the gameID and show other players score lists
-			};
-
-			ws.onmessage = function(e) {
-				console.log(e.data);
-			};
-		}
 	}
 
 	var SetGame = function() {
