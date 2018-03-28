@@ -35,7 +35,10 @@ const TypeTitan = {
 				results: []
 			};
 			TypeTitan.Get.Dict({file: game.settings.dict}, (dict) => {
-				const limit = game.settings.modifier || dict.length;
+				let limit = game.settings.modifier || dict.length;
+				if (limit > 50) {
+					limit = 50;
+				}
 				for (let i = 0; i < limit; i++) {
 					game.dict.push(TypeTitan.Get.Word(dict));
 				}
