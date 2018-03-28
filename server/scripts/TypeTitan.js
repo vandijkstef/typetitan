@@ -5,8 +5,9 @@ const store = require('json-fs-store')('../server/cache');
 
 const TypeTitan = {
 	Get: {
-		Dict: (file, callback) => {
-			var data = fs.readFileSync(`./public/dicts/${file}.json`, 'utf8');
+		Dict: (options, callback) => {
+			var data = fs.readFileSync(`./public/dicts/${options.file}.json`, 'utf8');
+			data = JSON.parse(data);
 			callback(data);
 		},
 		Dicts: () => {
@@ -14,23 +15,37 @@ const TypeTitan = {
 		},
 		Modes: () => {
 			return settings.gameModes;
+		},
+		Word: (dict) => {
+			const index = Math.floor(Math.random() * dict.length);
+			const newWord = dict.splice(index, 1);
+			return newWord[0];
 		}
 	},
 	Create: {
 		Game: (dict, mode, modifier, callback) => {
 			const game = {
 				id: 'g-' + uniqid(),
-				mode: mode,
-				modifier: modifier,
+				settings: {
+					dict: dict,
+					mode: mode,
+					modifier: modifier
+				},
 				dict: [],
 				results: []
 			};
-			store.add(game, (err) => {
-				if (err) {
-					throw err;
-				} else {
-					callback(game.id);
+			TypeTitan.Get.Dict({file: game.settings.dict}, (dict) => {
+				const limit = game.settings.modifier || dict.length;
+				for (let i = 0; i < limit; i++) {
+					game.dict.push(TypeTitan.Get.Word(dict));
 				}
+				store.add(game, (err) => {
+					if (err) {
+						throw err;
+					} else {
+						callback(game.id);
+					}
+				});
 			});
 		}
 	}

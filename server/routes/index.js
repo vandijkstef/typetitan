@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const TypeTitan = require('../scripts/TypeTitan.js');
+const store = require('json-fs-store')('../server/cache');
 
 router.get('/', (req, res) => {
 	const dicts = TypeTitan.Get.Dicts();
@@ -13,13 +14,9 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-	// console.log(req.body);
-	// GetDict(req.body.dict)
-	// GameMode(req.body.mode)
-	// Modifief(req.body.modifier)
 	TypeTitan.Create.Game(req.body.dict, req.body.mode, req.body.modifier, (gameID) => {
-		console.log(gameID);
-		res.send('done');
+		gameID = gameID.replace('g-', '');
+		res.redirect(`/game/${gameID}`);
 	});
 });
 
@@ -28,11 +25,14 @@ router.get('/game', (req, res) => {
 });
 
 router.get('/game/:id', (req, res) => {
-	TypeTitan.Get.Dict('en', (data) => {
-		console.log(data);
-		res.render('game.ejs', {
-			data: 'TypeTitans Game'
-		});
+	store.load(`g-${req.params.id}`, (err, data) => {
+		if (err) {
+			res.redirect('/');
+		} else {
+			res.render('game.ejs', {
+				game: data
+			});
+		}
 	});
 });
 
