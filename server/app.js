@@ -1,14 +1,15 @@
-var express = require('express');
-var path = require('path');
+const path = require('path');
+
+const express = require('express');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+const compression = require('compression');
 // var favicon = require('serve-favicon');
 // var logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const compression = require('compression');
+
 const index = require('./routes/index');
-// var users = require('./routes/users');
-const session = require('express-session');
-const FileStore = require('session-file-store')(session);
 
 const app = express();
 
