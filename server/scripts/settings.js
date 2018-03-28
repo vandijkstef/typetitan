@@ -7,10 +7,10 @@ const settings = {
 			label: 'English large',
 			file: 'en_full'
 		},
-		{
-			label: 'English small',
-			file: 'en'
-		}
+		// {
+		// 	label: 'English small',
+		// 	file: 'en'
+		// }
 	],
 	gameModes: [
 		{
