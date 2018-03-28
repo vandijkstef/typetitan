@@ -13,13 +13,6 @@ router.get('/', (req, res) => {
 	});
 });
 
-router.post('/', (req, res) => {
-	TypeTitan.Create.Game(req.body.dict, req.body.mode, req.body.modifier, (gameID) => {
-		gameID = gameID.replace('g-', '');
-		res.redirect(`/game/${gameID}`);
-	});
-});
-
 router.get('/game', (req, res) => {
 	res.redirect('/');
 });
@@ -29,10 +22,46 @@ router.get('/game/:id', (req, res) => {
 		if (err) {
 			res.redirect('/');
 		} else {
+			console.log(data);
 			res.render('game.ejs', {
 				game: data
 			});
 		}
+	});
+});
+
+// Submission of home page
+// Creates a new game and brings you there
+router.post('/', (req, res) => {
+	TypeTitan.Create.Game(req.body.dict, req.body.mode, req.body.modifier, (gameID) => {
+		gameID = gameID.replace('g-', '');
+		res.redirect(`/game/${gameID}`);
+	});
+});
+
+// Submission of game
+// Checks your answers and stores data server-side
+router.post('/game', (req, res) => {
+	store.load(`${req.body.gameID}`, (err, gameData) => {
+		const dict = gameData.dict;
+		const stats = {
+			right: 0,
+			wrong: 0
+		};
+		for (let i = 0; i < dict.length; i++) {
+			console.log(dict[i], req.body['word-' + i]);
+			if (dict[i][0] === req.body['word-' + i]) {
+				console.log('right!');
+				stats.right++;
+			} else {
+				stats.wrong++;
+				console.log('wong');
+			}
+		}
+		// res.redirect('/game/:id/:player');
+		res.render('postgame.ejs', {
+			stats: stats
+		});
 	});
 });
 
