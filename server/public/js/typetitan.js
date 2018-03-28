@@ -18,10 +18,11 @@
 			ws.onopen = function() {
 				console.log('WS Connected');
 				ws.send('Hi Mr. Server');
+				ws.send('wantScores'); // TODO: Send this on postgame, along with the gameID and show other players score lists
 			};
 
 			ws.onmessage = function(e) {
-				console.log(e);
+				console.log(e.data);
 			};
 		}
 	}

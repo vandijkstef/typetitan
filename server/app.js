@@ -17,6 +17,9 @@ const wss = new ws({port: 13375});
 wss.on('connection', (ws) => {
 	ws.on('message', (message) => {
 		console.log('received', message);
+		if (message === 'wantScores') {
+			ws.send('heres some scores');
+		}
 	});
 	setInterval(()=>{
 		ws.send('heartbeat');
