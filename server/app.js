@@ -5,11 +5,11 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const compression = require('compression');
 const ws = require('ws').Server;
-// var favicon = require('serve-favicon');
-// var logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+// var favicon = require('serve-favicon');
 
+// Require all routes
 const index = require('./routes/index');
 
 // Setup websocket
@@ -40,16 +40,15 @@ app.use(session({
 	saveUninitialized: true,
 	resave: false
 }));
-// uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-// app.use(logger('dev'));
+
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico'))); // uncomment after placing your favicon in /public
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-// app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
