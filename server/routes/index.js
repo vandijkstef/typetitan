@@ -22,7 +22,6 @@ router.get('/game/:id', (req, res) => {
 		if (err) {
 			res.redirect('/');
 		} else {
-			console.log(data);
 			res.render('game.ejs', {
 				game: data
 			});
@@ -49,13 +48,10 @@ router.post('/game', (req, res) => {
 			wrong: 0
 		};
 		for (let i = 0; i < dict.length; i++) {
-			console.log(dict[i], req.body['word-' + i]);
 			if (dict[i][0] === req.body['word-' + i]) {
-				console.log('right!');
 				stats.right++;
 			} else {
 				stats.wrong++;
-				console.log('wong');
 			}
 		}
 		// res.redirect('/game/:id/:player');

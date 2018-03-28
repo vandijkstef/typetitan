@@ -4,6 +4,10 @@
   --tone: #95AB63;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-color: var(--bg);
   color: var(--text);
@@ -15,6 +19,10 @@ body {
   min-height: 100vh;
   margin: 0;
   position: relative;
+}
+
+fieldset {
+  border: 0;
 }
 
 .button {
