@@ -54,43 +54,28 @@ CSS Layer 2:
 
 So...
 For BT:
-- Do accesibility test (on mac!)
+- !Do accesibility test (on mac!)
 	- colorblind
 	- sun
 	- contrast
 	- font size
 	- show tests
 	- Keyboardfriendly	
-- Take screenies on IE8 (mac remote desktop?)
-- Create feature planner (voorhoede ding)
+- !Take screenies on IE8 (mac remote desktop?)
+- !Create feature planner (voorhoede ding)
+- !Do live updating scores -> I promised this
+- !Mobile/Touch test
+
 - Code snippets in Readme
 - add affordance/feedback on elements
-- Do live updating scores -> I promised this
-- Mobile/Touch test
 - Feedback on input
 - Set live?
 - Show players actions during game
 - Do more stuff?
 
-- UPDATE THE README!!
+- !UPDATE THE README!!
 
 For PM: 
-- Fix docs!
-- AUDITS!
-- Describe PWA functionality
-- How does it score in lighthouse?
+- AUDITS! (mac cuz screenies)
 - Show offline state?
-
-Bedenk aan de hand van de workshop van Jasper, hoe jij de Service Worker wil implementeren in jou app. Maak hiervoor een job story / user story aan. Zorg ervoor dat je in ieder geval een aantal statische assets cached en serveert met de Worker. Geef ook feedback aan de gebruiker over de online/offline state. 
-
-Meet met behulp van de Timeline en/of Network tab van de DevTools vóór en ná je aanpassingen de render tijd van de pagina. Doe in de README.md verslag van je bevindingen.
-
-Vermeld ook je job story / user story in de README.md
-
-Zorg ervoor dat je README.md en/of AUDIT.md in orde zijn. Dat wil zeggen dat het duidelijk is hoe je app geïnstalleerd en gebuild moet worden, en dat je duidelijk de performance winst per optimalisatie weergeeft.
-
-https://thejunkland.com/blog/how-to-write-good-readme.html 
-http://tom.preston-werner.com/2010/08/23/readme-driven-development.html
-
-
 INSTALL LIVE!!
