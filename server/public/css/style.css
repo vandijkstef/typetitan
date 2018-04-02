@@ -95,6 +95,10 @@ label {
   z-index: 10;
 }
 
+.js.rich form[action='/game'] > div label span {
+  opacity: .5;
+}
+
 .js.rich form[action='/game'] > div input {
   border: none;
   background-color: transparent;

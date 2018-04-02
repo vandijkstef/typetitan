@@ -98,6 +98,9 @@ label {
 				}
 				label {
 					z-index: 10;
+					span {
+						opacity: .5;
+					}
 				}
 				input {
 					border: none;
