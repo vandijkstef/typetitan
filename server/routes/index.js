@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const TypeTitan = require('../scripts/TypeTitan.js');
+const TypeTitan = require('../scripts/TypeTitan.Server.js');
 const store = require('json-fs-store')('../server/cache');
 
 router.get('/', (req, res) => {
