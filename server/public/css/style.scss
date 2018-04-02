@@ -22,7 +22,7 @@ body {
 }
 
 .hidden {
-	display: none;
+	display: none !important;
 }
 
 // Formlikes
@@ -40,7 +40,7 @@ label {
 	display: block;
 }
 
-.button, button {
+.button, button, [type=submit] {
 	color: #BDD684;
 	color: var(--bg);
 	background-color: #10222B;
@@ -50,6 +50,7 @@ label {
 	display: inline-block;
 	margin: 1em .3em 0;
 	text-decoration: none;
+	border: none;
 	&:focus {
 		text-decoration: underline;
 	}
