@@ -1,9 +1,11 @@
+// Vars 'nd stuff
 :root {
 	--bg: #BDD684;
 	--text: #10222B;
 	--tone: #95AB63;
 }
 
+// General
 * {
 	box-sizing: border-box;
 }
@@ -14,15 +16,31 @@ body {
 	background-color: #BDD684;
 	background-color: var(--bg);
 	font-family: Ubuntu, Calibri, sans-serif;
+	font-size: 2em;
 	margin: 0;
 	position: relative;
 }
 
+.hidden {
+	display: none;
+}
+
+// Formlikes
 fieldset {
 	border: 0;
 }
 
-.button {
+select, input {
+	font-size: .8em;
+	padding: .4em;
+	width: 100%;
+}
+
+label {
+	display: block;
+}
+
+.button, button {
 	color: #BDD684;
 	color: var(--bg);
 	background-color: #10222B;
@@ -37,50 +55,7 @@ fieldset {
 	}
 }
 
-.hidden {
-	display: none;
-}
 
-#word {
-	font-size: 5em;
-	font-weight: bold;
-	text-align: center;
-	margin: 0;
-	.inactive {
-		opacity: .3;
-	}
-	.current {
-		opacity: 1;
-		// color: blue;
-	}
-	.error {
-		color: red;
-	}
-	.correct {
-		// color: var(--tone);
-		opacity: .6;
-	}
-}
-
-main {
-	font-size: 2em;
-	h1 {
-		// font-size: 4em;
-	}
-	select, input {
-		font-size: .8em;
-		padding: .4em;
-		width: 100%;
-	}
-	.button {
-		// font-size: 1.6em;
-	}
-	label {
-		// margin: 0;
-		display: block;
-	}
-		
-}
 
 #score {
 	position: absolute;
@@ -108,8 +83,28 @@ main {
 }
 
 .js {
-	form[action='/game'] {
-		// display: none;
+	&.rich {
+		form[action='/game'] {
+			& > div {
+				position: relative;
+				width: 100%;
+				width: 15em;
+				label, input {
+					position: absolute;
+					font-family: monospace;
+					font-size: 2em;
+					padding: 0;
+				}
+				label {
+					z-index: 10;
+				}
+				input {
+					border: none;
+					background-color: transparent;
+					outline: 0;
+				}
+			}
+		}
 	}
 }
 

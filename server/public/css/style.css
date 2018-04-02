@@ -14,15 +14,30 @@ body {
   background-color: #BDD684;
   background-color: var(--bg);
   font-family: Ubuntu, Calibri, sans-serif;
+  font-size: 2em;
   margin: 0;
   position: relative;
+}
+
+.hidden {
+  display: none;
 }
 
 fieldset {
   border: 0;
 }
 
-.button {
+select, input {
+  font-size: .8em;
+  padding: .4em;
+  width: 100%;
+}
+
+label {
+  display: block;
+}
+
+.button, button {
   color: #BDD684;
   color: var(--bg);
   background-color: #10222B;
@@ -34,49 +49,8 @@ fieldset {
   text-decoration: none;
 }
 
-.button:focus {
+.button:focus, button:focus {
   text-decoration: underline;
-}
-
-.hidden {
-  display: none;
-}
-
-#word {
-  font-size: 5em;
-  font-weight: bold;
-  text-align: center;
-  margin: 0;
-}
-
-#word .inactive {
-  opacity: .3;
-}
-
-#word .current {
-  opacity: 1;
-}
-
-#word .error {
-  color: red;
-}
-
-#word .correct {
-  opacity: .6;
-}
-
-main {
-  font-size: 2em;
-}
-
-main select, main input {
-  font-size: .8em;
-  padding: .4em;
-  width: 100%;
-}
-
-main label {
-  display: block;
 }
 
 #score {
@@ -101,6 +75,29 @@ main label {
   background-color: rgba(0, 0, 0, 0.6);
   width: 100vw;
   color: white;
+}
+
+.js.rich form[action='/game'] > div {
+  position: relative;
+  width: 100%;
+  width: 15em;
+}
+
+.js.rich form[action='/game'] > div label, .js.rich form[action='/game'] > div input {
+  position: absolute;
+  font-family: monospace;
+  font-size: 2em;
+  padding: 0;
+}
+
+.js.rich form[action='/game'] > div label {
+  z-index: 10;
+}
+
+.js.rich form[action='/game'] > div input {
+  border: none;
+  background-color: transparent;
+  outline: 0;
 }
 
 @supports (display: flex) {
