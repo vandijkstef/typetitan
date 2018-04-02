@@ -14,16 +14,19 @@ const index = require('./routes/index');
 
 // Setup websocket
 const wss = new ws({port: 13375});
-wss.on('connection', (ws) => {
+wss.on('connection', (ws, req) => {
+
+	// Fetch connection session ID
+	const value = '; ' + req.headers.cookie;
+	const parts = value.split('; ' + 'connect.sid' + '=');
+	const sessionID = parts.pop().split(';').shift();
+
 	ws.on('message', (message) => {
 		console.log('received', message);
 		if (message === 'wantScores') {
 			ws.send('heres some scores');
 		}
 	});
-	setInterval(()=>{
-		ws.send('heartbeat');
-	}, 1000);
 });
 
 // Setup App

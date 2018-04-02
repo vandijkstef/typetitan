@@ -1,14 +1,14 @@
 <%- include head.ejs %>
-
+<section id="main" class="game">
 	<form action="/game" method="post">
-	<h2>game</h2>
+	<h1>game</h1>
 
 		<% if (locals.game.dict) { %>
 			<% for (let i = 0; i < locals.game.dict.length; i++) { %>
 
 				<div>
 					<label for="word-<%- i %>"><%- locals.game.dict[i] %></label>
-					<input type="text" id="word-<%- i %>" name="word-<%- i %>" required>
+					<input type="text" id="word-<%- i %>" name="word-<%- i %>" required autocorrect="off" autocapitalize="none">
 				</div>
 				
 			<% } %>
@@ -21,5 +21,5 @@
 	<script>
 		var game = <%- JSON.stringify(locals.game) %>
 	</script>
-
+</section>
 <%- include foot.ejs %>

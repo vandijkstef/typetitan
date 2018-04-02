@@ -5,7 +5,7 @@
 			<% if (locals.dicts) { %>
 				<fieldset>
 					<label for="dict">Dictionary</label>
-					<select name="dict" id="dict">
+					<select name="dict" title="dict" id="dict">
 						<% for (let i = 0; i < locals.dicts.length; i++) { %>
 							<option value="<%- locals.dicts[i].file %>"><%- locals.dicts[i].label %></option>
 						<% } %>
@@ -15,7 +15,7 @@
 			<% if (locals.gameModes) { %>
 				<fieldset>
 					<label for="mode">Gamemode</label>
-					<select name="mode" id="mode">
+					<select name="mode" title="mode" id="mode">
 						<% for (let i = 0; i < locals.gameModes.length; i++) { %>
 							<option value="<%- locals.gameModes[i].mode %>"><%- locals.gameModes[i].label %></option>
 						<% } %>
@@ -24,7 +24,7 @@
 			<% } %>
 			<fieldset>
 				<label for="modifier">Modifier</label>
-				<input type="number" name ="modifier">
+				<input type="number" title="modifier" id="modifier" name="modifier" value="20" min="1">
 			</fieldset>
 			<input type="submit" value="start">
 		</form>

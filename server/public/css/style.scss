@@ -62,7 +62,7 @@ fieldset {
 	}
 }
 
-#main {
+main {
 	font-size: 2em;
 	h1 {
 		// font-size: 4em;
@@ -77,6 +77,7 @@ fieldset {
 	}
 	label {
 		// margin: 0;
+		display: block;
 	}
 		
 }

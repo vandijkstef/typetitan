@@ -65,14 +65,18 @@ fieldset {
   opacity: .6;
 }
 
-#main {
+main {
   font-size: 2em;
 }
 
-#main select, #main input {
+main select, main input {
   font-size: .8em;
   padding: .4em;
   width: 100%;
+}
+
+main label {
+  display: block;
 }
 
 #score {

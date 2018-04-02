@@ -13,10 +13,10 @@ const settings = {
 		// }
 	],
 	gameModes: [
-		{
-			label: 'All the words! Finish the complete dictionary',
-			mode: 'all'
-		},
+		// {
+		// 	label: 'All the words! Finish the complete dictionary',
+		// 	mode: 'all'
+		// },
 		{
 			label: `Rush! Do XX words as quick as possible`,
 			mode: 'rush',
