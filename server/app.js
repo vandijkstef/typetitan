@@ -28,6 +28,8 @@ wss.on('connection', (ws, req) => {
 		}
 	});
 });
+// Require our websocket. This will setup the websocket on it's own
+require('./socket.js');
 
 // Setup App
 const app = express();
