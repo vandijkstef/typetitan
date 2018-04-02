@@ -1,1 +1,53 @@
-<%= data %>
+<%- include head.ejs %>
+	<section id="main" class="menu">
+		<h1>TypeTitan</h1>
+		<form method="post" action="/">
+			<section class="user">
+				<h2>Player</h2>
+				<fieldset>
+					<label for="playerName">Name</label>
+					<input type="text" title="playerName" id="playerName" name="playerName" required>
+				</fieldset>
+			</section>
+			<section class="toggleMode">
+				<button type="button">New Game</button>
+				<button type="button">Join Game</button>
+			</section>
+			<section class="game">
+				<h2>Game</h2>
+				<% if (locals.dicts) { %>
+					<fieldset>
+						<label for="dict">Dictionary</label>
+						<select name="dict" title="dict" id="dict">
+							<% for (let i = 0; i < locals.dicts.length; i++) { %>
+								<option value="<%- locals.dicts[i].file %>"><%- locals.dicts[i].label %></option>
+							<% } %>
+						</select>
+					</fieldset>
+				<% } %>
+				<% if (locals.gameModes) { %>
+					<fieldset>
+						<label for="mode">Gamemode</label>
+						<select name="mode" title="mode" id="mode">
+							<% for (let i = 0; i < locals.gameModes.length; i++) { %>
+								<option value="<%- locals.gameModes[i].mode %>"><%- locals.gameModes[i].label %></option>
+							<% } %>
+						</select>
+					</fieldset>
+				<% } %>
+				<fieldset>
+					<label for="modifier">Modifier</label>
+					<input type="number" title="modifier" id="modifier" name="modifier" value="20" min="1">
+				</fieldset>
+			</section>
+			<section class="gameID hidden">
+				<h2>Join exsisting game</h2>
+				<fieldset>
+					<label for="gameID">Game ID</label>
+					<input type="text" title="gameID" id="gameID" name="gameID">
+				</fieldset>
+			</section>
+			<input type="submit" value="start">
+		</form>
+	</section>
+<%- include foot.ejs %>

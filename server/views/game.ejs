@@ -1,0 +1,25 @@
+<%- include head.ejs %>
+<section id="main" class="game">
+	<form action="/game" method="post">
+	<h1>game</h1>
+
+		<% if (locals.game.dict) { %>
+			<% for (let i = 0; i < locals.game.dict.length; i++) { %>
+
+				<div>
+					<label for="word-<%- i %>"><%- locals.game.dict[i] %></label>
+					<input type="text" id="word-<%- i %>" name="word-<%- i %>" required autocorrect="off" autocapitalize="none">
+				</div>
+				
+			<% } %>
+		<% } %>
+
+		<input type="hidden" name="gameID" value="<%- locals.game.id %>">
+		<input type="submit">
+	</form>
+
+	<script>
+		var game = <%- JSON.stringify(locals.game) %>
+	</script>
+</section>
+<%- include foot.ejs %>

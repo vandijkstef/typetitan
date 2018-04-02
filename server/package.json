@@ -3,15 +3,22 @@
   "version": "0.0.1",
   "author": "Stef van Dijk",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "watch": "nodemon .bin/www -i cache/ -i sessions/"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
+    "compression": "^1.7.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "~4.15.5",
+    "express-session": "^1.15.6",
+    "json-fs-store": "^1.0.1",
     "morgan": "~1.9.0",
-    "serve-favicon": "~2.4.5"
+    "serve-favicon": "~2.4.5",
+    "session-file-store": "^1.2.0",
+    "uniqid": "^4.1.1",
+    "ws": "^5.1.0"
   }
 }
