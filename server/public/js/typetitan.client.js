@@ -10,17 +10,22 @@
 	if ('addEventListener' in document) {
 		document.addEventListener('DOMContentLoaded', function() {
 			document.body.classList.add('js');
-			if ('classList' in document.body && 'querySelector' in document.body) {
-				document.body.classList.add('rich');
-				SetGame();
-				GameSocket();
+			if ('querySelector' in document.body) {
+				if ('localStorage' in window) {
+					PersistantGameOptions();
+				}
+				if ('classList' in document.body) {
+					document.body.classList.add('rich');
+					SetGame();
+					GameSocket();
+				}
 			}
 		});
 	}
 
 	/// JS ENABLED GAME ///
 	var SetGame = function() {
-		const game = document.querySelector('#main.game');
+		var game = document.querySelector('#main.game');
 		if (game) {
 			form = document.querySelector('form[action="/game"]');
 			if (form) {
@@ -73,10 +78,32 @@
 	// Also, Do something with score
 	var UpdateInput = function(answer, e) {
 		// TODO: Update coloring of label (answer)
-		const value = e.target.value;
-		const lastInput = e; // TODO: What is the key input?
+		var value = e.target.value;
+		var lastInput = e; // TODO: What is the key input?
 		// TODO: How about hooking up scoring here?
 		console.log('UpdateInput:', answer, e, value, lastInput);
+	};
+
+	/// Caching / Persistance ///
+
+	// Cache the game options / reset them
+	var PersistantGameOptions = function() {
+		var menu = document.querySelector('#main.menu');
+		if (menu) {
+			form = document.querySelector('form[action="/"]');
+			if (form) {
+				var playerName = form.querySelector('[name=playerName]');
+				if (localStorage.getItem('playerName')) {
+					playerName.value = localStorage.getItem('playerName');
+				}
+				form.addEventListener('submit', function(e) {
+					var playerName = e.target.querySelector('[name=playerName]');
+					localStorage.setItem('playerName', playerName.value);
+				});
+			} else {
+				console.warn('Menu form element not found');
+			}
+		}
 	};
 
 	/// WEBSOCKET ///
