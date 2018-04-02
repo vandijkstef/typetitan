@@ -6,14 +6,16 @@ An game where you toss sentient plants to earn tokens.
 A game where you collect crystals from underwater cities starting from nothing.
 	Turn based/base building
 
-
-
 Typing game in the browser
 
 ☐ Score display
 	☐ Score streak
 	☐ Last word score
 	☐ Current score
+	☐ Competitor score
+		☐ During
+		☐ Postgame
+	☐ Upload to server
 
 ☐ Settings panel
 	☐ Setting saving
@@ -27,6 +29,15 @@ Typing game in the browser
 	☐ Avatar?
 	☐ Highscores
 	☐ Possibly created simple REST server for this?
+
+☐ Caching
+	☐ LocalStorage
+	☐ Service worker/offline
+
+☐ Game
+	☐ Input feedback
+	☐ Input/text overlay
+	☐ Make flag for classic mode (non-js mode)
 
 ☐ Music
 ☐ FX correct
