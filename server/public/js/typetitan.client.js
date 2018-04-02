@@ -34,7 +34,9 @@
 					for (var i = 0; i < gameDivs.length; i++) {
 						// TODO: Expand labels into span per letter
 						var input = gameDivs[i].querySelector('input');
-						input.addEventListener('keyup', TestField);
+						input.addEventListener('keydown', TestField);
+						input.addEventListener('keyup', LateTestField);
+						SpanText(gameDivs[i].querySelector('label'));
 					}
 					StageNextWord(currentWord);
 					var submit = document.querySelector('input[type=submit]');
@@ -64,10 +66,32 @@
 		gameDivs[index].querySelector('input').focus();
 	};
 
+	var SpanText = function(label) {
+		if (label) {
+			var textArray = label.innerText.split('');
+			label.innerHTML = '';
+			for (var i = 0; i < textArray.length; i++) {
+				label.innerHTML += '<span>' + textArray[i] + '</span>';
+			}
+		} else {
+			console.warn('SpanText: No label');
+		}
+	};
+
 	// Fired on every keyUp on the textfield
 	var TestField = function(e) {
 		var answer = document.querySelector('label[for=' + e.target.id + ']');
-		UpdateInput(answer, e);
+		if (UpdateInput(answer, e)) {
+			console.log('correct input');
+		} else {
+			console.log('preventing');
+			e.preventDefault();
+		}
+		
+	};
+	
+	var LateTestField = function(e) {
+		var answer = document.querySelector('label[for=' + e.target.id + ']');
 		if (answer.innerText === e.target.value) {
 			currentWord++;
 			StageNextWord(currentWord);
@@ -78,10 +102,18 @@
 	// Also, Do something with score
 	var UpdateInput = function(answer, e) {
 		// TODO: Update coloring of label (answer)
-		var value = e.target.value;
-		var lastInput = e; // TODO: What is the key input?
+		var value = e.target.value; // Form field total value
+		var curIndex = value.length;
+		var lastInput = e.key; // TODO: What is the key input?
+
 		// TODO: How about hooking up scoring here?
-		console.log('UpdateInput:', answer, e, value, lastInput);
+		// console.log('UpdateInput:', e, answer.innerText, value, lastInput, curIndex);
+
+		if (answer.innerText[curIndex] === lastInput) {
+			return true;
+		} else {
+			return false;
+		}
 	};
 
 	/// Caching / Persistance ///
