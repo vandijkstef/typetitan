@@ -16,6 +16,7 @@ Typing game in the browser
 		☐ During
 		☐ Postgame
 	☐ Upload to server
+	☐ Server Start and server post time
 
 ☐ Settings panel
 	☐ Setting saving
@@ -35,6 +36,7 @@ Typing game in the browser
 	☐ Service worker/offline
 
 ☐ Game
+	☐ Game start countdown
 	☐ Input feedback
 	☐ Input/text overlay
 	☐ Make flag for classic mode (non-js mode)
