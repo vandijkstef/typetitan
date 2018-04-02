@@ -4,7 +4,7 @@ const settings = {
 	flow: true,
 	dictionaries: [
 		{
-			label: 'English large',
+			label: 'English',
 			file: 'en_full'
 		},
 		// {
